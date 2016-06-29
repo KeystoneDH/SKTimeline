@@ -13,3 +13,53 @@
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/51/Twitter_logo.svg/2000px-Twitter_logo.svg.png" width="200">
 ##### Twitter does a lot of things. It can tell the world what you had for lunch, or it can inform your teams of trends and issues happening right now! Link hashtags and user handles directly into your development timeline.
+
+## OS X Development Setup Instructions 
+
+Install MySQL Server*** - more on this later
+
+`brew install mysql`
+
+If not yet done so, install python verion 2.7 & virtualenv
+
+```
+brew install python
+pip install virtualenv
+```
+
+Clone this repository, change directories to project working directory, then setup and activate the virtual enviroment:
+
+```
+git clone REPOSITORY_URL_GOES_HERE
+cd SKTimeline
+virtualenv --no-site-packages .
+source bin/activate
+```
+
+Downgrade to pip v8.1.1 and install pip-tools:
+_(note: this is currently needed for pip-tools as used to manage packages)_
+
+```
+bin/pip install --upgrade pip==8.1.1
+bin/pip install pip-tools
+```
+Install needed project packages from requirements.txt in the virtualenv via pip-sync:
+
+```
+bin/pip-sync
+```
+
+Setup the Flask application server
+
+```
+bin/python run.py
+```
+
+Done!
+
+## About [`pip-tools`](https://github.com/nvie/pip-tools#readme) for package management ##
+I've setup this project to use the `requirements.in` file to manage all packages that is needed for development.  
+
+If a new package is needed, add it to the `requirements.in` file then run `bin/pip-compile`.  This generates the `requirements.txt` file which locks the package to a version.  
+
+When upgrading a code change from the repo that requires a new package to be d, run `bin/pip-sync` which will install/upgrade/uninstall everything so that the virtualenv exactly matches what's in `requirements.txt` file.

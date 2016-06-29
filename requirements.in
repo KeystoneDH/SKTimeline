@@ -1,0 +1,6 @@
+Flask
+MySQL-python
+wtforms
+flask_mail
+passlib
+Flask-SQLAlchemy
